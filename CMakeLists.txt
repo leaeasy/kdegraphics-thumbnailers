@@ -76,9 +76,6 @@ else()
 endif()
 
 
-ecm_set_disabled_deprecation_versions(QT 5.15.2 KF 5.100.0
-    )
-
 find_package(Poppler "22.02.0" COMPONENTS Qt5)
 if(Poppler_FOUND)
 ecm_optional_add_subdirectory(pdf)

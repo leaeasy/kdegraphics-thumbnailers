@@ -39,20 +39,8 @@ KIO::ThumbnailResult PDFCreator::create(const KIO::ThumbnailRequest &request)
 {
     //load the image into the QByteArray
     QByteArray data;
+
     const QString path = request.url().toLocalFile();
-
-    bool loaded=KDcrawIface::KDcraw::loadEmbeddedPreview(data, path);
-
-    if (!loaded) {
-        return KIO::ThumbnailResult::fail();
-    }
-
-    //Load the image into a QImage
-    QImage preview;
-    if (!preview.loadFromData(data) || preview.isNull()) {
-        return KIO::ThumbnailResult::fail();
-    }
-
     Poppler::Document* document = Poppler::Document::load(path);
     if (!document || document->isLocked()) {
         delete document;
@@ -61,7 +49,6 @@ KIO::ThumbnailResult PDFCreator::create(const KIO::ThumbnailRequest &request)
     
     // Access page of the PDF file
     Poppler::Page* pdfPage = document->page(0);  // Document starts at page 0
-
     // Generate a QImage of the rendered page
     QImage image = pdfPage->renderToImage();
     if (image.isNull()) {
@@ -71,7 +58,7 @@ KIO::ThumbnailResult PDFCreator::create(const KIO::ThumbnailRequest &request)
     }
 
     //Scale the image as requested by the thumbnailer
-    QImage img=preview.scaled(request.targetSize(),Qt::KeepAspectRatio);
+    QImage img=image.scaled(request.targetSize(),Qt::KeepAspectRatio);
     delete pdfPage;
     delete document;
     return KIO::ThumbnailResult::pass(img);
