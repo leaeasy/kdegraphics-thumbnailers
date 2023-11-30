@@ -79,7 +79,10 @@ endif()
 ecm_set_disabled_deprecation_versions(QT 5.15.2 KF 5.100.0
     )
 
-ecm_optional_add_subdirectory(ps)
+find_package(Poppler "22.02.0" COMPONENTS Qt5)
+if(Poppler_FOUND)
+ecm_optional_add_subdirectory(pdf)
+endif()
 
 if(${KExiv2PackageName}_FOUND AND ${KDcrawPackageName}_FOUND)
 ecm_optional_add_subdirectory(raw)

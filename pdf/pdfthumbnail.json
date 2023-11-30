@@ -1,0 +1,11 @@
+{
+    "CacheThumbnail": true,
+    "KPlugin": {
+        "MimeTypes": [
+            "application/pdf"
+        ],
+        "Name": "Portable Document Format Files",
+        "Name[zh_CN]": "PDF可移植文档格式"
+    },
+    "MimeType": "application/pdf;"
+}
